@@ -8,9 +8,6 @@ add_to_multimap_csv() {
     key="$1"
     value="$2"
     
-    # Delete the file if it exists to ensure it's always new
-    [ -f "$csv_file" ] && rm "$csv_file"
-    
     # Create the CSV file with a header if it doesn't exist
     if [ ! -f "$csv_file" ]; then
         echo "Key,Values" > "$csv_file"

@@ -1,32 +1,31 @@
 #!/bin/bash
 
-# File to store the multimap
-multimap_file="multimap.txt"
+# CSV file to store the multimap
+csv_file="multimap.csv"
 
-# Function to add values to the multimap file
-add_to_multimap_file() {
+# Function to add values to the multimap CSV file
+add_to_multimap_csv() {
     key="$1"
     value="$2"
     
     # Check if the file exists
-    if [ ! -f "$multimap_file" ]; then
-        touch "$multimap_file"
+    if [ ! -f "$csv_file" ]; then
+        # Create the CSV file with a header
+        echo "Key,Values" > "$csv_file"
     fi
     
     # Append the key-value pair to the file
-    echo "$key $value" >> "$multimap_file"
+    echo "$key,$value" >> "$csv_file"
 }
 
-# Example: Adding values to the multimap file
-add_to_multimap_file "key1" "value1"
-add_to_multimap_file "key1" "value2"
-add_to_multimap_file "key2" "value3"
-add_to_multimap_file "key2" "value4"
-add_to_multimap_file "key3" "value5"
+# Example: Adding values to the multimap CSV file
+add_to_multimap_csv "key1" "value1"
+add_to_multimap_csv "key1" "value2"
+add_to_multimap_csv "key2" "value3"
+add_to_multimap_csv "key2" "value4"
+add_to_multimap_csv "key3" "value5"
 
-# Example: Iterating through the multimap file
-while IFS= read -r line; do
-    key=$(echo "$line" | cut -d ' ' -f 1)
-    value=$(echo "$line" | cut -d ' ' -f 2)
-    echo "Key: $key, Value: $value"
-done < "$multimap_file"
+# Example: Iterating through the multimap CSV file
+tail -n +2 "$csv_file" | while IFS=, read -r key values; do
+    echo "Key: $key, Values: $values"
+done

@@ -17,6 +17,8 @@ add_to_multimap_csv() {
     echo "$key,$value" >> "$csv_file"
 }
 
+# Delete the file if it exists to ensure it's always new
+[ -f "$csv_file" ] && rm "$csv_file"
 # Example: Adding values to the multimap CSV file
 add_to_multimap_csv "key1" "value1"
 add_to_multimap_csv "key1" "value2"
